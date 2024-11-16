@@ -7,6 +7,11 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [],
+  daisyui: {
+    themes: ["bumblebee", "synthwave"],
+  },
+  plugins: [
+    require('daisyui'),
+  ]
 }
 
