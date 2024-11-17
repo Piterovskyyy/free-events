@@ -15,27 +15,23 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    // Konstruktor bez użycia @Autowired wstrzykuje BCryptPasswordEncoder bezpośrednio.
     public UserService() {
-        this.passwordEncoder = new BCryptPasswordEncoder();  // Tworzymy instancję BCryptPasswordEncoder
+        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
     public boolean registerUser(User user) {
-        // Sprawdzamy, czy użytkownik już istnieje w bazie
         if (userRepository.existsByEmail(user.getEmail())) {
-            return false;  // Użytkownik już istnieje
+            return false;
         }
 
-        // Haszowanie hasła przed zapisaniem
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
 
-        // Zapisujemy nowego użytkownika w bazie
         userRepository.save(user);
-        return true;  // Rejestracja powiodła się
+        return true;
     }
 
     public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email);  // Wyszukiwanie użytkownika po emailu
+        return userRepository.findByEmail(email);
     }
 }

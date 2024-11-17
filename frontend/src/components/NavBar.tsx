@@ -41,7 +41,7 @@ const NavBar: React.FC = () => {
                     <input type="checkbox" value="synthwave" className="toggle theme-controller" />
                     <AiFillMoon className="w-[16px]"/>
                     <button className="btn btn-ghost btn-circle">
-                    <div onClick={() => navigate('/sign-up')} className="indicator">
+                    <div onClick={() => navigate('/sign-in')} className="indicator">
                         <BiLogIn className="icon"/>
                     </div>
                     </button>

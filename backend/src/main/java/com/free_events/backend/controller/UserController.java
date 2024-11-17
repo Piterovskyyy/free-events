@@ -7,15 +7,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = "http://localhost:5173")
 public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @GetMapping("/hello")
-    public String hello() {
-        return "Hello, World!";
-    }
 
     @PostMapping("/register")
     public String registerUser(@RequestBody User user) {
