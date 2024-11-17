@@ -24,7 +24,7 @@ public class UserController {
             return ResponseEntity.ok("User successfully registered!");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body("Registration failed! User might already exist.");
+                    .body("Rejestracja nie powiodła się.");
         }
     }
 
@@ -36,7 +36,7 @@ public class UserController {
             return ResponseEntity.ok("Authenticated!");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body("Invalid credentials");
+                    .body("Niepoprawne dane logowania.");
         }
     }
 }
