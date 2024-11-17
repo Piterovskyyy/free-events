@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -20,9 +21,24 @@ const SignInPage: React.FC = () => {
     
     const [isLoading, setLoading] = useState(false);
 
-    const handleSubmit = () => {
-
-    }
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+        
+        try {
+          const url = 'http://localhost:8080/api/users/login';
+          const response = await axios.post(url, formData, {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+    
+          console.log(response);
+        } catch(e) {
+          console.error(e);
+        } finally {
+          setLoading(false);
+        }}
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-base-200">
