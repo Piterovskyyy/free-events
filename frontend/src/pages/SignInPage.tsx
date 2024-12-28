@@ -1,16 +1,21 @@
-import axios, { AxiosError } from "axios";
-import { useState } from "react";
+import axios from "axios";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { User, UserContext } from "../contexts/UserContext";
 
 const SignInPage: React.FC = () => {
 
-    const navigate = useNavigate();
+    const context = useContext(UserContext);
+    if (!context) {
+        throw new Error('UserProfile must be used within a UserProvider');
+    }
 
+    const { login } = context;
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: '',
         password: '',
     });
-
     const [isLoading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -29,11 +34,14 @@ const SignInPage: React.FC = () => {
         
         try {
           const url = 'http://localhost:8080/api/users/login';
-          const response = await axios.post(url, formData, {
+          const response = await axios.post<User>(url, formData, {
             headers: {
               'Content-Type': 'application/json'
             }
           })
+
+          login(response.data);
+          navigate('/');
         } catch(e: any) {
           setErrorMessage(e.response.data);
         } finally {

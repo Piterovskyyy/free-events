@@ -1,17 +1,15 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { User } from "../contexts/UserContext";
 
 const SignUpPage: React.FC = () => {
-
   const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     email: '',
-    username: '',
+    name: '',
     password: '',
   });
-
   const [isLoading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -30,13 +28,13 @@ const SignUpPage: React.FC = () => {
     
     try {
       const url = 'http://localhost:8080/api/users/register';
-      const response = await axios.post(url, formData, {
+      await axios.post<User>(url, formData, {
         headers: {
           'Content-Type': 'application/json'
         }
       })
 
-      console.log(response);
+      navigate('/sign-in');
     } catch(e: any) {
       setErrorMessage(e.response.data);
     } finally {
@@ -76,10 +74,10 @@ const SignUpPage: React.FC = () => {
                 </label>
                 <input
                   type="text"
-                  name="username"
+                  name="name"
                   placeholder="Podaj nazwę użytkownika"
                   className="input input-bordered w-full"
-                  value={formData.username}
+                  value={formData.name}
                   onChange={handleChange}
                   required
                 />
