@@ -29,11 +29,12 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> authenticateUser(@RequestBody LoginRequestBody user) {
+    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequestBody user) {
         boolean isAuthenticated = userService.authenticateUser(user);
 
         if (isAuthenticated) {
-            return ResponseEntity.ok("Authenticated!");
+            User userByEmail = userService.getUserByEmail(user.getEmail());
+            return ResponseEntity.ok(userByEmail);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("Niepoprawne dane logowania.");
