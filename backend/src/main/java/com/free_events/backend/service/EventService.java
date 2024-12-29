@@ -22,6 +22,13 @@ public class EventService {
         return eventRepository.save(event);
     }
 
+    public List<Event> getAllEvents() {
+        return eventRepository.findAll();
+    }
+    public Event getEventById(String eventId) {
+        return eventRepository.findById(eventId).orElse(null);
+    }
+
     public List<Event> getEventsByOrganizerId(String organizerId) {
         return eventRepository.findByOrganizerId(organizerId);
     }

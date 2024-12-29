@@ -52,6 +52,12 @@ public class EventController {
         }
     }
 
+    @GetMapping
+    public ResponseEntity<List<Event>> getAllEvents() {
+        List<Event> events = eventService.getAllEvents();
+        return ResponseEntity.ok(events);
+    }
+
     @GetMapping("/by-organizer")
     public ResponseEntity<List<Event>> getEventsByOrganizer(@RequestParam String organizerId) {
         List<Event> events = eventService.getEventsByOrganizerId(organizerId);
