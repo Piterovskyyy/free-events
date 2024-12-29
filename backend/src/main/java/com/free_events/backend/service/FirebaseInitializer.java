@@ -9,11 +9,14 @@ import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+// D:\Projekty\Uczelnia\free-events\backend\src\main\resources\firebase-service-account.json
+// C:\Users\jakub\OneDrive - Politechnika Śląska\Pulpit\free-events\backend\src\main\resources\firebase-service-account.json
+
 @Service
 public class FirebaseInitializer {
     @PostConstruct
     public void initialize() throws IOException {
-        FileInputStream serviceAccount = new FileInputStream("C:\\Users\\jakub\\OneDrive - Politechnika Śląska\\Pulpit\\free-events\\backend\\src\\main\\resources\\firebase-service-account.json");
+        FileInputStream serviceAccount = new FileInputStream("D:\\Projekty\\Uczelnia\\free-events\\backend\\src\\main\\resources\\firebase-service-account.json");
 
         FirebaseOptions options = FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))

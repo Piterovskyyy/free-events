@@ -52,7 +52,7 @@ const NavBar: React.FC = () => {
                         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
                         <li ref={dropdownRef} onClick={(e) => navigateFromDropdown(e, '/')}><a>Strona Główna</a></li>
                         <li ref={dropdownRef} onClick={(e) => navigateFromDropdown(e, '/events')}><a>Wydarzenia</a></li>
-                        {/* <li><a>About</a></li> */}
+                        {user && <li ref={dropdownRef} onClick={(e) => navigateFromDropdown(e, '/new-event')}><a>Dodaj wydarzenie</a></li> }
                     </ul>
                     </div>
                 </div>

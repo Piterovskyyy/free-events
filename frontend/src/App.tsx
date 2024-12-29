@@ -4,6 +4,8 @@ import SignUpPage from "./pages/SignUpPage";
 import NavBar from "./components/NavBar";
 import SignInPage from "./pages/SignInPage";
 import EventsPage from "./pages/EventsPage";
+import NewEventPage from "./pages/NewEventPage";
+import RestrictedRoute from "./components/RestrictedRoute";
 
 function App() {
   return (
@@ -14,6 +16,14 @@ function App() {
         <Route path="/sign-up" element={ <SignUpPage/> } />
         <Route path="/sign-in" element={ <SignInPage/> } />
         <Route path="/events" element={ <EventsPage/> } />
+        <Route
+          path="/new-event"
+          element={
+            <RestrictedRoute>
+              <NewEventPage />
+            </RestrictedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
