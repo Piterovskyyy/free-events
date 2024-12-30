@@ -35,7 +35,6 @@ public class EventController {
             ObjectMapper objectMapper = new ObjectMapper();
             EventRequest eventRequest = objectMapper.readValue(eventRequestJson, EventRequest.class);
             String imageUrl = firebaseStorageService.uploadFile(image);
-
             Event event = new Event(
                     eventRequest.getName(),
                     eventRequest.getDescription(),
@@ -55,6 +54,7 @@ public class EventController {
     @GetMapping
     public ResponseEntity<List<Event>> getAllEvents() {
         List<Event> events = eventService.getAllEvents();
+
         return ResponseEntity.ok(events);
     }
 

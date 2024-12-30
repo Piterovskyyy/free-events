@@ -3,20 +3,23 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; // Importowanie stylów
 import { BiSolidCalendar } from "react-icons/bi";
 
-const DateTimePicker: React.FC = () => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+interface DateTimePickerProps {
+  setDate: (location: string) => void;
+  date: string;
+}
 
+const DateTimePicker: React.FC<DateTimePickerProps> = ({ setDate, date }) => {
   return (
     <div className="flex justify-center items-center gap-2">
-        <BiSolidCalendar className="icon"/>
-        <DatePicker
-          selected={selectedDate}
-          onChange={(date) => setSelectedDate(date)}
-          showTimeSelect
-          timeIntervals={15} // co ile minut można wybierać godzinę
-          dateFormat="dd/MM/yyyy; HH:mm" // format daty i godziny
-          className="input input-bordered"
-        />
+      <BiSolidCalendar className="icon" />
+      <DatePicker
+        selected={date ? new Date(date) : null}
+        onChange={(date) => setDate(date?.toISOString().slice(0, 19) ?? "")}
+        showTimeSelect
+        timeIntervals={15}
+        dateFormat="dd/MM/yyyy; HH:mm"
+        className="input input-bordered"
+      />
     </div>
   );
 };
