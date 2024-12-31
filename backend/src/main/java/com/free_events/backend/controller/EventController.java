@@ -51,9 +51,30 @@ public class EventController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<Event>> getAllEvents() {
         List<Event> events = eventService.getAllEvents();
+
+        return ResponseEntity.ok(events);
+    }
+
+    @GetMapping("/past")
+    public ResponseEntity<List<Event>> getPastEvents() {
+        List<Event> events = eventService.getPastEvents();
+
+        return ResponseEntity.ok(events);
+    }
+
+    @GetMapping("/upcoming")
+    public ResponseEntity<List<Event>> getUpcomingEvents() {
+        List<Event> events = eventService.getUpcomingEvents();
+
+        return ResponseEntity.ok(events);
+    }
+
+    @GetMapping("/today")
+    public ResponseEntity<List<Event>> getTodayEvents() {
+        List<Event> events = eventService.getTodayEvents();
 
         return ResponseEntity.ok(events);
     }
@@ -76,5 +97,15 @@ public class EventController {
             @RequestParam LocalDateTime endDate) {
         List<Event> events = eventService.getEventsBetweenDates(startDate, endDate);
         return ResponseEntity.ok(events);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Event> getEventById(@PathVariable("id") String id) {
+        Event event = eventService.getEventById(id);
+        if (event != null) {
+            return ResponseEntity.ok(event);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

@@ -75,7 +75,7 @@ const NewEventPage: React.FC = () => {
                 onChange={(e) => setEventName(e.target.value)}
               />
             </div>
-            <div className="flex flex-col justify-center max-h-min">
+            <div className="flex flex-col justify-center max-h-min ml-12 mr-12">
               <GoogleMapAddress
                 setLocation={setEventLocation}
                 location={eventLocation}

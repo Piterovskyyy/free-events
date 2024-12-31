@@ -13,4 +13,9 @@ public interface EventRepository extends MongoRepository<Event, String> {
     List<Event> findByNameContainingIgnoreCase(String name);
 
     List<Event> findByEventDateBetween(LocalDateTime startDate, LocalDateTime endDate);
+
+    List<Event> findByEventDateBefore(LocalDateTime dateTime);
+
+    List<Event> findByEventDateAfter(LocalDateTime dateTime);
+
 }

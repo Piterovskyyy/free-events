@@ -29,7 +29,6 @@ public class Event {
         this.imageUrl = imageUrl;
     }
 
-    // Gettery i Settery
     public String getId() {
         return id;
     }

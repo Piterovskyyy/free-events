@@ -40,4 +40,20 @@ public class EventService {
     public List<Event> getEventsBetweenDates(LocalDateTime startDate, LocalDateTime endDate) {
         return eventRepository.findByEventDateBetween(startDate, endDate);
     }
+
+    public List<Event> getPastEvents() {
+        LocalDateTime now = LocalDateTime.now();
+        return eventRepository.findByEventDateBefore(now);
+    }
+
+    public List<Event> getUpcomingEvents() {
+        LocalDateTime now = LocalDateTime.now();
+        return eventRepository.findByEventDateAfter(now);
+    }
+
+    public List<Event> getTodayEvents() {
+        LocalDateTime startOfDay = LocalDateTime.now().toLocalDate().atStartOfDay();
+        LocalDateTime endOfDay = startOfDay.plusDays(1).minusSeconds(1);
+        return eventRepository.findByEventDateBetween(startOfDay, endOfDay);
+    }
 }

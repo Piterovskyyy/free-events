@@ -6,16 +6,18 @@ import SignInPage from "./pages/SignInPage";
 import EventsPage from "./pages/EventsPage";
 import NewEventPage from "./pages/NewEventPage";
 import RestrictedRoute from "./components/RestrictedRoute";
+import EventPage from "./pages/EventPage";
 
 function App() {
   return (
     <BrowserRouter>
-      <NavBar/>
+      <NavBar />
       <Routes>
-        <Route path="/" element={ <HomePage/> } />
-        <Route path="/sign-up" element={ <SignUpPage/> } />
-        <Route path="/sign-in" element={ <SignInPage/> } />
-        <Route path="/events" element={ <EventsPage/> } />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/sign-up" element={<SignUpPage />} />
+        <Route path="/sign-in" element={<SignInPage />} />
+        <Route path="/events" element={<EventsPage />} />
+        <Route path="/events/:id" element={<EventPage />} />
         <Route
           path="/new-event"
           element={
