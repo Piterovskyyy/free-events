@@ -24,7 +24,7 @@ const HomePage: React.FC = () => {
                     <p className="mb-5">
                         Szukasz niezapomnianych przeżyć? Odkryj świat darmowych wydarzeń i koncertów w Twoim mieście i nie tylko!
                     </p>
-                    <button className="btn btn-primary" onClick={() => navigate('/events')}>Kup bilety!</button>
+                    <button className="btn btn-primary" onClick={() => navigate('/events')}>Zarezerwuj bilet!</button>
                 </div>
             </div>
         </div>

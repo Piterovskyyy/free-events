@@ -58,6 +58,13 @@ public class EventController {
         return ResponseEntity.ok(events);
     }
 
+    @GetMapping("/nearest")
+    public ResponseEntity<Event> getNearestEvent() {
+        return eventService.findNearestEvent()
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @GetMapping("/past")
     public ResponseEntity<List<Event>> getPastEvents() {
         List<Event> events = eventService.getPastEvents();

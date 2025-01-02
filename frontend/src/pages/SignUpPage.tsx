@@ -2,8 +2,10 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { User } from "../contexts/UserContext";
+import { useAlert } from "../contexts/AlertContext";
 
 const SignUpPage: React.FC = () => {
+  const showAlert = useAlert();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
@@ -34,6 +36,7 @@ const SignUpPage: React.FC = () => {
         }
       })
 
+      showAlert('Zarejestrowano!');
       navigate('/sign-in');
     } catch(e: any) {
       setErrorMessage(e.response.data);

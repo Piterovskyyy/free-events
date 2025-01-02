@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EventService {
@@ -31,6 +33,10 @@ public class EventService {
 
     public List<Event> getEventsByOrganizerId(String organizerId) {
         return eventRepository.findByOrganizerId(organizerId);
+    }
+
+    public Optional<Event> findNearestEvent() {
+        return eventRepository.findTopByEventDateGreaterThanEqualOrderByEventDateAsc(new Date());
     }
 
     public List<Event> searchEventsByName(String name) {

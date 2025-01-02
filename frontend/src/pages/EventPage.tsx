@@ -87,7 +87,7 @@ const EventPage: React.FC = () => {
   const isPastEvent = new Date(event.eventDate) < new Date();
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-base-200 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto mt-20">
         <div className="relative h-[300px] rounded-xl overflow-hidden mb-8">
           <img
@@ -98,21 +98,21 @@ const EventPage: React.FC = () => {
             }`}
           />
           {isPastEvent && (
-            <div className="absolute top-4 right-4 bg-red-500 text-white px-4 py-2 rounded-full">
+            <div className="absolute top-4 text-white right-4 bg-red-500 px-4 py-2 rounded-full">
               Minione wydarzenie
             </div>
           )}
         </div>
 
         {/* Event Info */}
-        <div className="bg-white rounded-xl shadow-sm p-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">
+        <div className="bg-base-100 rounded-xl shadow-sm p-8">
+          <h1 className="text-3xl font-bold mb-4">
             {event.name}
           </h1>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
             <div className="space-y-4">
-              <div className="flex items-center gap-3 text-gray-600">
+              <div className="flex items-center gap-3 ">
                 <Calendar className="h-5 w-5" />
                 <span>
                   {format(new Date(event.eventDate), "EEEE, d MMMM yyyy", {
@@ -120,13 +120,13 @@ const EventPage: React.FC = () => {
                   })}
                 </span>
               </div>
-              <div className="flex items-center gap-3 text-gray-600">
+              <div className="flex items-center gap-3">
                 <Clock className="h-5 w-5" />
                 <span>
                   {format(new Date(event.eventDate), "HH:mm", { locale: pl })}
                 </span>
               </div>
-              <div className="flex items-center gap-3 text-gray-600">
+              <div className="flex items-center gap-3 ">
                 <MapPin className="h-5 w-5" />
                 <span className="flex-1">{event.location}</span>
               </div>
@@ -136,8 +136,8 @@ const EventPage: React.FC = () => {
               <button
                 className={`w-full py-3 px-4 rounded-lg font-medium ${
                   isPastEvent || !contex?.user?.id
-                    ? "bg-gray-100 text-gray-500 cursor-not-allowed"
-                    : "bg-blue-600 text-white hover:bg-blue-700"
+                    ? "btn btn-disabled cursor-not-allowed"
+                    : "btn btn-primary"
                 }`}
               >
                 {isPastEvent
@@ -147,7 +147,7 @@ const EventPage: React.FC = () => {
                   : "Zaloguj się, aby dołączyć móc do wydarzenia"}
               </button>
               <button
-                className="w-full py-3 px-4 rounded-lg font-medium border border-gray-300 text-gray-700 hover:bg-gray-50 flex items-center justify-center gap-2"
+                className="w-full py-3 px-4 rounded-lg font-medium btn btn-outline flex items-center justify-center gap-2"
                 onClick={handleShare}
               >
                 <Share2 className="h-4 w-4" />
@@ -158,7 +158,7 @@ const EventPage: React.FC = () => {
 
           <div className="prose max-w-none">
             <h2 className="text-xl font-semibold mb-4">O wydarzeniu</h2>
-            <p className="text-gray-600 leading-relaxed">{event.description}</p>
+            <p className="text-base-600 leading-relaxed">{event.description}</p>
           </div>
           <GoogleMapAddress location={event.location} />
         </div>

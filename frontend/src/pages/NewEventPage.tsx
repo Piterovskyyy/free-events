@@ -4,9 +4,13 @@ import DateTimePicker from "../components/DateTimePicker";
 import { useContext, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../contexts/UserContext";
+import { useAlert } from "../contexts/AlertContext";
+import { useNavigate } from "react-router-dom";
 
 const NewEventPage: React.FC = () => {
+  const showAlert = useAlert();
   const context = useContext(UserContext);
+  const navigate = useNavigate();
 
   const [eventName, setEventName] = useState<string>("");
   const [eventDescription, setEventDescription] = useState<string>("");
@@ -40,7 +44,8 @@ const NewEventPage: React.FC = () => {
       );
 
       if (response.status === 200) {
-        alert("Event created successfully!");
+        showAlert('Utworzono wydarzenie.');
+        navigate('/events');
       } else {
         alert("Failed to create event.");
       }

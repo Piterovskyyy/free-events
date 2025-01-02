@@ -1,28 +1,59 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BsFillTicketPerforatedFill } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
+import EventInterface from "../types/EventInterface";
+import axios from "axios";
 
-interface MainEventProps {
-    title: string; 
-    description: string; 
-    image: string
-}
+const MainEvent: React.FC= () => {
+    const navigate = useNavigate();
 
-const MainEvent: React.FC<MainEventProps> = ({ title, description, image }) => {
+    const [eventDescription, setEventDescription] = useState('');
+    const [eventName, setEventName] = useState('');
+    const [eventId, setEventId] = useState('');
+    const [eventImageUrl, setEventImageUrl] = useState('');
+
+    const fetchLatestEvent = async () => {
+        try {
+            const url = 'http://localhost:8080/api/events/nearest';
+            const response = await axios.get<EventInterface>(url, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+    
+            const { id, name, description, imageUrl } = response.data;
+    
+            setEventDescription(description);
+            setEventName(name);
+            setEventId(id);
+            setEventImageUrl(imageUrl);
+        } catch (e: any) {
+            // setErrorMessage(e.response?.data || 'An error occurred');
+        } finally {
+            // setLoading(false);
+        }
+    };
+    
+
+    useEffect(() => {
+        fetchLatestEvent();
+    }, [])
+
     return (
         <div className="bg-base-100 rounded-md h-96 w-full relative">
             <div className=" absolute left-0 right-0 top-0 bg-primary flex justify-center align-middle gap-7 rounded-tl-md rounded-tr-md font-semibold uppercase tracking-widest">
                 <BsFillTicketPerforatedFill className="icon"/>
-                Najnowszy Event
+                    Najnowszy Event
                 <BsFillTicketPerforatedFill className="icon"/>
             </div>
             <div className="grid grid-cols-[2fr_1fr] w-full h-full mt-5">
                 <div className="flex flex-col justify-center h-full mr-10">
-                    <p className="text-5xl capitalize font-bold text-primary ml-10 p-5 pl-0">{ title }</p>
-                    <p className="ml-10">{ description }</p>
-                    <button className="btn btn-primary max-w-fit ml-10 mt-5">Kup bilet</button>
+                    <p className="text-5xl capitalize font-bold text-primary ml-10 p-5 pl-0">{ eventName }</p>
+                    <p className="ml-10">{ eventDescription }</p>
+                    <button onClick={() => navigate(`/evets/${eventId}`)} className="btn btn-primary max-w-fit ml-10 mt-5">Kup bilet</button>
                 </div>
                 <div className="flex justify-center align-center">
-                    <img className="rounded-md rounded-bl-none w-full h-full" src={image} alt="Event poster"/>
+                    <img className="rounded-md rounded-bl-none w-full h-full" src={eventImageUrl} alt="Event poster"/>
                 </div>
             </div>
         </div>

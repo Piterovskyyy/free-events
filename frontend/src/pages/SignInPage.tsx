@@ -2,9 +2,11 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { User, UserContext } from "../contexts/UserContext";
+import { useAlert } from "../contexts/AlertContext";
 
 const SignInPage: React.FC = () => {
 
+    const showAlert = useAlert(); 
     const context = useContext(UserContext);
     if (!context) {
         throw new Error('UserProfile must be used within a UserProvider');
@@ -41,6 +43,7 @@ const SignInPage: React.FC = () => {
           })
 
           login(response.data);
+          showAlert('Zalogowano!');
           navigate('/');
         } catch(e: any) {
           setErrorMessage(e.response.data);

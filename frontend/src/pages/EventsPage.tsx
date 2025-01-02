@@ -67,12 +67,7 @@ const EventsPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-base-200 flex justify-center">
       <div className="w-2/3 mt-24 mb-24">
-        <MainEvent
-          title="Quebonafide - PÓŁNOC/POŁUDNIE"
-          description="W 2023 roku zadeklarował, że nie będzie już żadnych solowych kawałków. Rozbudził jednak apetyty fanów, zapowiadając jeszcze jeden, ostatni koncert… I faktycznie, Quebonafide raz jeszcze powróci na scenę, aby się pożegnać. Jednak nie będzie to koncert, jakiego wszyscy się spodziewają. Zanim opadnie kurtyna, artysta szykuje projekt artystyczny, jakiego w Polsce jeszcze nie było."
-          image="https://www.rmf.fm/_files/Upload/Images/queb810x700_1.jpg"
-        />
-
+        <MainEvent/>
         <div className="flex gap-3 mt-5">
           <label className="input flex items-center gap-2 flex-1">
             <input
