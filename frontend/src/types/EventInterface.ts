@@ -5,4 +5,5 @@ export default interface EventInterface {
   imageUrl: string;
   eventDate: string;
   location: string;
+  registeredUserIds: string[];
 }

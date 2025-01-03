@@ -4,6 +4,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Document(collection = "events")
 public class Event {
@@ -16,17 +18,26 @@ public class Event {
     private LocalDateTime eventDate;
     private String organizerId;
     private String imageUrl;
+    private List<String> registeredUserIds = new ArrayList<>();
 
     // Konstruktor
     public Event() {}
 
-    public Event(String name, String description, String location, LocalDateTime eventDate, String organizerId, String imageUrl) {
+    public Event(
+            String name,
+            String description,
+            String location,
+            LocalDateTime eventDate,
+            String organizerId,
+            String imageUrl,
+            List<String> registeredUserIds) {
         this.name = name;
         this.description = description;
         this.location = location;
         this.eventDate = eventDate;
         this.organizerId = organizerId;
         this.imageUrl = imageUrl;
+        this.registeredUserIds = registeredUserIds;
     }
 
     public String getId() {
@@ -83,5 +94,13 @@ public class Event {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public List<String> getRegisteredUserIds() {
+        return registeredUserIds;
+    }
+
+    public void setRegisteredUserIds(List<String> registeredUserIds) {
+        this.registeredUserIds = registeredUserIds;
     }
 }

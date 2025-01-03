@@ -7,13 +7,15 @@ import { useParams } from "react-router-dom";
 import { pl } from "date-fns/locale";
 import GoogleMapAddress from "../components/GoogleMapAddress";
 import { UserContext } from "../contexts/UserContext";
+import { useAlert } from "../contexts/AlertContext";
 
 const EventPage: React.FC = () => {
   const [event, setEvent] = useState<EventInterface | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const { id } = useParams(); // Pobieramy id z URL
-  const contex = useContext(UserContext);
+  const context = useContext(UserContext);
+  const showAlert = useAlert();
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -76,7 +78,7 @@ const EventPage: React.FC = () => {
       navigator.clipboard
         .writeText(eventUrl)
         .then(() => {
-          alert("Link do wydarzenia został skopiowany do schowka!");
+          showAlert("Link do wydarzenia został skopiowany do schowka!");
         })
         .catch((err) => {
           console.error("Failed to copy text: ", err);
@@ -86,6 +88,38 @@ const EventPage: React.FC = () => {
 
   const isPastEvent = new Date(event.eventDate) < new Date();
 
+  const isUserAlreadySignedUpForEvent = (userId: string) => {
+    return event.registeredUserIds.includes(userId);
+  }
+
+  const handleEventSignup = async () => {
+    if(isPastEvent) return;
+
+    try {
+      const userId = context?.user?.id;
+
+      if(!userId) {
+        throw new Error('No user ID.');
+      }
+
+      if(isUserAlreadySignedUpForEvent(userId)) return;
+
+      await axios.post(
+        `http://localhost:8080/api/events/${event.id}/register`,
+        new URLSearchParams({ userId }),
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
+  
+      showAlert('Zapisano na wydarzenie!');
+    } catch (error) {
+      showAlert('Wystąpił błąd podczas zapisu na wydarzenie.')
+    }
+  }
+
   return (
     <div className="min-h-screen bg-base-200 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto mt-20">
@@ -93,9 +127,8 @@ const EventPage: React.FC = () => {
           <img
             src={event.imageUrl}
             alt={event.name}
-            className={`w-full h-full object-cover ${
-              isPastEvent ? "grayscale" : ""
-            }`}
+            className={`w-full h-full object-cover ${isPastEvent ? "grayscale" : ""
+              }`}
           />
           {isPastEvent && (
             <div className="absolute top-4 text-white right-4 bg-red-500 px-4 py-2 rounded-full">
@@ -134,17 +167,19 @@ const EventPage: React.FC = () => {
 
             <div className="space-y-4">
               <button
-                className={`w-full py-3 px-4 rounded-lg font-medium ${
-                  isPastEvent || !contex?.user?.id
+                onClick={handleEventSignup}
+                disabled={context?.user?.id ? isUserAlreadySignedUpForEvent(context.user.id) : true}
+                className={`w-full py-3 px-4 rounded-lg font-medium ${isPastEvent || !context?.user?.id
                     ? "btn btn-disabled cursor-not-allowed"
                     : "btn btn-primary"
-                }`}
+                  }`}
               >
                 {isPastEvent
                   ? "Wydarzenie zakończone"
-                  : contex?.user?.id
-                  ? "Dołącz do wydarzenia"
-                  : "Zaloguj się, aby dołączyć móc do wydarzenia"}
+                  : context?.user?.id
+                    ? !isUserAlreadySignedUpForEvent(context.user.id) 
+                      ? "Dołącz do wydarzenia" : "Dołączono"
+                    : "Zaloguj się, aby dołączyć móc do wydarzenia"}
               </button>
               <button
                 className="w-full py-3 px-4 rounded-lg font-medium btn btn-outline flex items-center justify-center gap-2"

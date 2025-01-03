@@ -6,11 +6,13 @@ import com.free_events.backend.model.EventRequest;
 import com.free_events.backend.service.EventService;
 import com.free_events.backend.service.FirebaseStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -41,7 +43,8 @@ public class EventController {
                     eventRequest.getLocation(),
                     LocalDateTime.parse(eventRequest.getEventDate()),
                     eventRequest.getOrganizerId(),
-                    imageUrl
+                    imageUrl,
+                    new ArrayList<String>()
             );
             Event createdEvent = eventService.createEvent(event);
 
@@ -113,6 +116,20 @@ public class EventController {
             return ResponseEntity.ok(event);
         } else {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/{eventId}/register")
+    public ResponseEntity<String> registerUserToEvent(
+            @PathVariable String eventId,
+            @RequestParam String userId) {
+        try {
+            String response = eventService.registerUserToEvent(eventId, userId);
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
     }
 }

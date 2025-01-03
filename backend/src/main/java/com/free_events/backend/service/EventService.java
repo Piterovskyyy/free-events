@@ -2,6 +2,7 @@ package com.free_events.backend.service;
 
 import com.free_events.backend.model.Event;
 import com.free_events.backend.repository.EventRepository;
+import com.free_events.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,9 @@ import java.util.Optional;
 public class EventService {
 
     private final EventRepository eventRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     public EventService(EventRepository eventRepository) {
@@ -61,5 +65,27 @@ public class EventService {
         LocalDateTime startOfDay = LocalDateTime.now().toLocalDate().atStartOfDay();
         LocalDateTime endOfDay = startOfDay.plusDays(1).minusSeconds(1);
         return eventRepository.findByEventDateBetween(startOfDay, endOfDay);
+    }
+
+    public String registerUserToEvent(String eventId, String userId) {
+        Optional<Event> eventOpt = eventRepository.findById(eventId);
+        if (eventOpt.isEmpty()) {
+            throw new IllegalArgumentException("Event not found");
+        }
+
+        Event event = eventOpt.get();
+
+        if (!userRepository.existsById(userId)) {
+            throw new IllegalArgumentException("User not found");
+        }
+
+        if (event.getRegisteredUserIds().contains(userId)) {
+            throw new IllegalStateException("User already registered for this event");
+        }
+
+        event.getRegisteredUserIds().add(userId);
+        eventRepository.save(event);
+
+        return "User successfully registered for the event";
     }
 }

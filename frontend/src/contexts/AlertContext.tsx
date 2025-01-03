@@ -27,23 +27,23 @@ export const AlertProvider: React.FC<AlertProviderProps> = ({ children }) => {
 
   return (
     <AlertContext.Provider value={showAlert}>
-        {children}
-        {alerts.map(alert => (
-            <div key={alert.id} role="alert" className="alert absolute bottom-5 z-30 right-5 w-1/3">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                className="h-6 w-6 shrink-0 stroke-current">
-                <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-            <span>{alert.message}</span>
+      {children}
+      {alerts.map(alert => (
+        <div key={alert.id} role="alert" className="alert fixed shadow-md bottom-5 z-30 right-5 w-1/3">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            className="h-6 w-6 shrink-0 stroke-current">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <span>{alert.message}</span>
         </div>
-        ))}
+      ))}
     </AlertContext.Provider>
   );
 };
@@ -54,23 +54,4 @@ export const useAlert = (): AlertContextType => {
     throw new Error('useAlert must be used within an AlertProvider');
   }
   return context;
-};
-
-const styles = {
-  alertContainer: {
-    position: 'fixed' as 'fixed',
-    bottom: '10px',
-    left: '10px',
-    zIndex: 1000,
-    display: 'flex',
-    flexDirection: 'column' as 'column',
-    gap: '10px',
-  },
-  alert: {
-    backgroundColor: '#333',
-    color: '#fff',
-    padding: '10px 20px',
-    borderRadius: '5px',
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-  },
 };
