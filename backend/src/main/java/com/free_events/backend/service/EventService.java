@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EventService {
@@ -88,4 +89,12 @@ public class EventService {
 
         return "User successfully registered for the event";
     }
+
+
+    public List<Event> getEventsByRegisteredUserId(String userId) {
+        return eventRepository.findAll().stream()
+                .filter(event -> event.getRegisteredUserIds().contains(userId))
+                .collect(Collectors.toList());
+    }
+
 }

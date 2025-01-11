@@ -13,7 +13,7 @@ const EventPage: React.FC = () => {
   const [event, setEvent] = useState<EventInterface | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const { id } = useParams(); // Pobieramy id z URL
+  const { id } = useParams();
   const context = useContext(UserContext);
   const showAlert = useAlert();
 
@@ -113,7 +113,7 @@ const EventPage: React.FC = () => {
           },
         }
       );
-  
+      event.registeredUserIds.push(userId);
       showAlert('Zapisano na wydarzenie!');
     } catch (error) {
       showAlert('Wystąpił błąd podczas zapisu na wydarzenie.')

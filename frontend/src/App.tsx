@@ -7,6 +7,7 @@ import EventsPage from "./pages/EventsPage";
 import NewEventPage from "./pages/NewEventPage";
 import RestrictedRoute from "./components/RestrictedRoute";
 import EventPage from "./pages/EventPage";
+import TicketsPage from "./pages/TicketsPage";
 
 function App() {
   return (
@@ -23,6 +24,14 @@ function App() {
           element={
             <RestrictedRoute>
               <NewEventPage />
+            </RestrictedRoute>
+          }
+        />
+        <Route
+          path="/tickets"
+          element={
+            <RestrictedRoute>
+              <TicketsPage />
             </RestrictedRoute>
           }
         />
