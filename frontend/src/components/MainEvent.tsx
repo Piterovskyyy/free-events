@@ -60,7 +60,7 @@ const MainEvent: React.FC= () => {
                         <button onClick={() => navigate(`/events/${eventId}`)} className="btn btn-primary max-w-fit ml-10 mt-5">Zarezerwuj bilet</button>
                     </div>
                     <div className="flex justify-center align-center">
-                        <img className="rounded-md rounded-bl-none w-full h-full" src={eventImageUrl} alt="Event poster"/>
+                        <img className="rounded-md rounded-bl-none h-[calc(100%-24px)] mt-[24px]" src={eventImageUrl} alt="Event poster"/>
                     </div>
                 </div>
             }
